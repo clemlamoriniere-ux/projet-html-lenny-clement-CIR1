@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analyse Météo</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Analyse de données météorologiques</h1>
+        <p>Importez un fichier CSV issu de data.gouv.fr pour commencer l'analyse.</p>
+    </header>
+
+    <main>
+
+        <!-- Section 1 : Import du fichier CSV -->
+        <section class="card" id="section-import">
+            <h2>Importer un fichier CSV</h2>
+            <div class="import-zone">
+                <label for="csvFile" class="btn btn-primary">Choisir un fichier CSV / CSV.GZ</label>
+                <input type="file" id="csvFile" accept=".csv,.csv.gz,.gz" hidden />
+                <span id="fileName">Aucun fichier sélectionné</span>
+            </div>
+            <p id="importError" class="error hidden"></p>
+        </section>
+
+        <!-- Sections masquées jusqu'au chargement des données -->
+        <div id="dataContainer" class="hidden">
+
+            <!-- Section 2 : Statistiques -->
+            <section class="card" id="section-stats">
+                <h2>Statistiques de température</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-label">Moyenne</span>
+                        <span class="stat-value" id="statMoy">—</span>
+                        <span class="stat-unit">°C</span>
+                    </div>
+                    <div class="stat-box stat-min">
+                        <span class="stat-label">Minimum</span>
+                        <span class="stat-value" id="statMin">—</span>
+                        <span class="stat-unit">°C</span>
+                    </div>
+                    <div class="stat-box stat-max">
+                        <span class="stat-label">Maximum</span>
+                        <span class="stat-value" id="statMax">—</span>
+                        <span class="stat-unit">°C</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Enregistrements</span>
+                        <span class="stat-value" id="statCount">—</span>
+                        <span class="stat-unit">lignes</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3 : Filtres -->
+            <section class="card" id="section-filtres">
+                <h2>Filtres et recherche</h2>
+                <div class="filtres-grid">
+                    <div class="filtre-group">
+                        <label for="searchVille">Ville</label>
+                        <input type="text" id="searchVille" placeholder="Rechercher une ville…" />
+                    </div>
+                    <div class="filtre-group">
+                        <label for="dateDebut">Date début</label>
+                        <input type="date" id="dateDebut" />
+                    </div>
+                    <div class="filtre-group">
+                        <label for="dateFin">Date fin</label>
+                        <input type="date" id="dateFin" />
+                    </div>
+                    <div class="filtre-group filtre-action">
+                        <button id="btnReset" class="btn btn-secondary">Réinitialiser les filtres</button>
+                    </div>
+                </div>
+                <p id="filtreInfo" class="filtre-info"></p>
+            </section>
+
+            <!-- Section 4 : Graphique -->
+            <section class="card" id="section-graphique">
+                <h2>Courbe des températures</h2>
+                <div class="chart-wrapper">
+                    <canvas id="tempChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Section 5 : Tableau de données -->
+            <section class="card" id="section-tableau">
+                <h2>Tableau des données</h2>
+                <div class="table-wrapper">
+                    <table id="dataTable">
+                        <thead id="tableHead"></thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+                <p id="tableEmpty" class="empty-msg hidden">Aucune donnée ne correspond aux filtres.</p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Projet scolaire — données issues de <a href="https://www.data.gouv.fr" target="_blank">data.gouv.fr</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
